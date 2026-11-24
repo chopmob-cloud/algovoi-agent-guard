@@ -1,5 +1,8 @@
 # AlgoVoi Agent Guard
 
+
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](./LICENSE)
+
 **The budget your agent can't raise.**
 
 A human signs a spend mandate. The agent holds its own key but never the human's.
