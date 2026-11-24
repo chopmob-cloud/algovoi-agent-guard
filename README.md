@@ -15,6 +15,24 @@ algovoi-agent-guard redteam --attacks 8 --outdir ./redteam        # AI model lan
 algovoi-agent-guard redteam --adversary fuzz --seed 7 --attacks 20 --outdir ./rt
 ```
 
+## See it run, then develop on it
+
+![AlgoVoi Agent Guard rogue-agent demo: five attacks denied or detected, the honest charge ALLOWed and recomputed offline](docs/evidence/demo.gif)
+
+*A real `algovoi-agent-guard demo` run, replayed from the captured output: a forged
+mandate, a replay, a forged countersign, a ledger rewrite and a foreign payee are all
+denied or detected, while the honest charge is ALLOWed and recomputes offline.*
+
+Prefer to drive it yourself? [`examples/quickstart.py`](examples/quickstart.py) is a
+commented, self-contained starter: issue a human-signed mandate, countersign a charge,
+verify the receipt offline, bind it to settlement, and watch a foreign payee denied.
+Run it, then edit the mandate and make it yours:
+
+```
+pip install algovoi-agent-guard
+python examples/quickstart.py
+```
+
 ## Watch a rogue agent fail (real run, 8 model-proposed attacks)
 
 `redteam` runs a deterministic attack battery, then asks an adversary to propose
