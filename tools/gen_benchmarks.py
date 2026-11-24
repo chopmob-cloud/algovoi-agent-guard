@@ -56,8 +56,9 @@ for r in d["redteam_throughput"]:
     L.append(f"| {r['adversary']} | {r['attacks']} | {r['seconds']} | {r['attacks_per_sec']:,.0f} |")
 L.append("")
 L.append("## Honest caveats")
+_app500 = d["append_latency_by_ledger_size"].get("500", {}).get("median_us", 0) / 1000.0
 L.append("- Append and verify are O(n): the ledger rewrites full history and fsyncs on every append. "
-         "At 500 entries an append is ~46 ms; this is a deliberate durability trade-off, not a hidden cost. "
+         f"At 500 entries an append is ~{_app500:.0f} ms; this is a deliberate durability trade-off, not a hidden cost. "
          "For high write rates, batch or shard ledgers.")
 L.append("- Single-writer is enforced by an exclusive lock; concurrent writers fail closed rather than corrupt.")
 L.append("- Numbers are single-machine, single-process; they are a floor for comparison, not a distributed-systems claim.")

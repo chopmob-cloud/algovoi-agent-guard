@@ -1,0 +1,4290 @@
+{
+  "adversary": {
+    "kind": "fuzz",
+    "seed": 7
+  },
+  "ai_disclaimer": "The autonomous adversary is an AI model (or a human/fuzzer) generating attack payloads for AUTHORIZED defensive testing of this guard only. It moves no funds and signs with no real key. AI output is fallible: a zero-bypass result covers only the attacks actually run against this mandate shape, not a proof of security. Refused, errored or stopped attempts are not coverage, and a run that executes no attack is inconclusive, not a pass. Use only against systems you own or are authorised to test. No warranty; see LICENSE (Apache-2.0).",
+  "attacks": [
+    {
+      "attack_type": "fuzz-1",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-1-75954",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 1,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-2",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-2-953893",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 2,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-3",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-3-438485",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 3,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-4",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-4-61981",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 4,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-5",
+      "n": 5,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-6",
+      "n": 6,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-7",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 250,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-7-123514",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 7,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-8",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-8-669949",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 8,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-9",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-9-65839",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 9,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-10",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-10-448363",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 10,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-11",
+      "n": 11,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-12",
+      "n": 12,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-13",
+      "n": 13,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-14",
+      "n": 14,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-15",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-15-700675",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 15,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-16",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-16-623241",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 16,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-17",
+      "n": 17,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-18",
+      "n": 18,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-19",
+      "n": 19,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-20",
+      "n": 20,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-21",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-21-774230",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 21,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-22",
+      "n": 22,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-23",
+      "n": 23,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-24",
+      "n": 24,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-25",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-25-158647",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 25,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-26",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-26-191200",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 26,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-27",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-27-560559",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 27,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-28",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-28-996382",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 28,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-29",
+      "n": 29,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-30",
+      "n": 30,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-31",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-31-170187",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 31,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-32",
+      "n": 32,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-33",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 250,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-33-73731",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 33,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-34",
+      "n": 34,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-35",
+      "n": 35,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-36",
+      "n": 36,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-37",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-37-541415",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 37,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-38",
+      "n": 38,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-39",
+      "n": 39,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-40",
+      "n": 40,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-41",
+      "n": 41,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-42",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-42-209629",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 42,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-43",
+      "n": 43,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-44",
+      "n": 44,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-45",
+      "n": 45,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-46",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-46-354143",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 46,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-47",
+      "n": 47,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-48",
+      "n": 48,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-49",
+      "n": 49,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-50",
+      "n": 50,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-51",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-51-158492",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 51,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-52",
+      "n": 52,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-53",
+      "n": 53,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-54",
+      "n": 54,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-55",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-55-307197",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 55,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-56",
+      "n": 56,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-57",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-57-941310",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 57,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-58",
+      "n": 58,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-59",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-59-4123",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 59,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-60",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 250,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-60-760420",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 60,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-61",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-61-556506",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 61,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-62",
+      "n": 62,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-63",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-63-474140",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 63,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-64",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-64-642282",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 64,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-65",
+      "n": 65,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-66",
+      "n": 66,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-67",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-67-127529",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 67,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-68",
+      "n": 68,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-69",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-69-822016",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 69,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-70",
+      "n": 70,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-71",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 250,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-71-782952",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 71,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-72",
+      "n": 72,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-73",
+      "n": 73,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-74",
+      "n": 74,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-75",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-75-461853",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 75,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-76",
+      "n": 76,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-77",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-77-88144",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 77,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-78",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-78-792489",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 78,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-79",
+      "n": 79,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-80",
+      "n": 80,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-81",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-81-983930",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 81,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-82",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-82-897820",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 82,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-83",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-83-12107",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 83,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-84",
+      "n": 84,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-85",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-85-52826",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 85,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-86",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 250,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-86-556883",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 86,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-87",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-87-186541",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 87,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-88",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-88-16091",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 88,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-89",
+      "n": 89,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-90",
+      "n": 90,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-91",
+      "n": 91,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-92",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-92-666870",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 92,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-93",
+      "n": 93,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-94",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-94-88588",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 94,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-95",
+      "n": 95,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-96",
+      "n": 96,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-97",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-97-339249",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 97,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-98",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-98-191845",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 98,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-99",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-99-292478",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 99,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-100",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-100-95264",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 100,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-101",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-101-43690",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 101,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-102",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-102-244118",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 102,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-103",
+      "n": 103,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-104",
+      "n": 104,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-105",
+      "n": 105,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-106",
+      "n": 106,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-107",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-107-139558",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 107,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-108",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-108-53247",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 108,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-109",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-109-479145",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 109,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-110",
+      "n": 110,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-111",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-111-764763",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 111,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-112",
+      "n": 112,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-113",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-113-804226",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 113,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-114",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-114-347889",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 114,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-115",
+      "n": 115,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-116",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-116-104353",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 116,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-117",
+      "n": 117,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-118",
+      "n": 118,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-119",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-119-481265",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 119,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-120",
+      "n": 120,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-121",
+      "n": 121,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-122",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-122-860059",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 122,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-123",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-123-242623",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 123,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-124",
+      "n": 124,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-125",
+      "n": 125,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-126",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-126-881046",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 126,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-127",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-127-125872",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 127,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-128",
+      "n": 128,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-129",
+      "n": 129,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-130",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-130-54124",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 130,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-131",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-131-535783",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 131,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-132",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-132-851404",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 132,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-133",
+      "n": 133,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-134",
+      "n": 134,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-135",
+      "n": 135,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-136",
+      "n": 136,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-137",
+      "n": 137,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-138",
+      "n": 138,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-139",
+      "n": 139,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-140",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-140-574394",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 140,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-141",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-141-582876",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 141,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-142",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-142-848673",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 142,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-143",
+      "n": 143,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-144",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-144-788645",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 144,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-145",
+      "n": 145,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-146",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 9007199254740992,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-146-403241",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 146,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-147",
+      "n": 147,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-148",
+      "n": 148,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-149",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-149-470758",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 149,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-150",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-150-547740",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 150,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-151",
+      "n": 151,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-152",
+      "n": 152,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-153",
+      "n": 153,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-154",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-154-549911",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 154,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-155",
+      "n": 155,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-156",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-156-675886",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 156,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-157",
+      "n": 157,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-158",
+      "n": 158,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-159",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-159-440418",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 159,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-160",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-160-970101",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 160,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-161",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-161-354472",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 161,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-162",
+      "n": 162,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-163",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-163-326857",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 163,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-164",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-164-797411",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 164,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-165",
+      "n": 165,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-166",
+      "n": 166,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-167",
+      "n": 167,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-168",
+      "n": 168,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-169",
+      "n": 169,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-170",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-170-684162",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 170,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-171",
+      "n": 171,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-172",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-172-114250",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 172,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-173",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-173-440593",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 173,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-174",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-174-861937",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 174,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-175",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-175-205222",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 175,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-176",
+      "n": 176,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-177",
+      "n": 177,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-178",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1001,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-178-65619",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 178,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-179",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-179-942199",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 179,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-180",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 1000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-180-45702",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 180,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-181",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-181-756623",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 181,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-182",
+      "bypass": false,
+      "guard_reasons": [
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-182-750330",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 182,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": []
+    },
+    {
+      "attack_type": "fuzz-183",
+      "n": 183,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-184",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-184-862721",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 184,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "authority_binding",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-185",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 250,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-185-379436",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 185,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-186",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-186-427563",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 186,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-187",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: scope_not_allowed",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-187-341582",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 187,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-188",
+      "n": 188,
+      "reasons": [
+        "payee must be a non-empty string"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-189",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 100,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-189-744249",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 189,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "payee"
+      ]
+    },
+    {
+      "attack_type": "fuzz-190",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-190-483313",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 190,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-191",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 251,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-191-594421",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 191,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-192",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-192-208865",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-2",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 192,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope",
+        "authority_binding"
+      ]
+    },
+    {
+      "attack_type": "fuzz-193",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-193-160769",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 193,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-194",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: scope_not_allowed",
+        "policy: per_charge_cap",
+        "countersign: key: countersign not under the mandate's human key",
+        "countersign: key: kid does not match the mandate's human key"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-194-263878",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "attacker",
+        "scope": "training",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 194,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "scope"
+      ]
+    },
+    {
+      "attack_type": "fuzz-195",
+      "n": 195,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-196",
+      "bypass": false,
+      "guard_reasons": [],
+      "guardrail_ref": "sha256:938aaeadcb650707dc29eb303cdda2fac518f3871f7451267c7bd581c07bfd48",
+      "intent": {
+        "amount": 1,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-196-881387",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 196,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "ALLOW",
+      "violates": []
+    },
+    {
+      "attack_type": "fuzz-197",
+      "bypass": false,
+      "guard_reasons": [
+        "policy: payee_not_allowed",
+        "policy: per_charge_cap",
+        "policy: period_cap"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 5000,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-197-125007",
+        "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+        "payee": "vendor-2",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 197,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "payee",
+        "period_cap"
+      ]
+    },
+    {
+      "attack_type": "fuzz-198",
+      "n": 198,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-199",
+      "n": 199,
+      "reasons": [
+        "scope must be a non-empty string or None"
+      ],
+      "verdict": "DENY",
+      "violates": [
+        "schema"
+      ]
+    },
+    {
+      "attack_type": "fuzz-200",
+      "bypass": false,
+      "guard_reasons": [
+        "mandate: intent bound to a different authority",
+        "policy: per_charge_cap",
+        "countersign: required"
+      ],
+      "guardrail_ref": "sha256:b6ca9d21a8f65d8a8edcd5e200c57b9d9589c4678b6433778e7942614e1ed80e",
+      "intent": {
+        "amount": 500,
+        "asset": "USDC",
+        "at": "2026-11-23T08:00:00Z",
+        "charge_id": "fuzz-200-744180",
+        "mandate_ref": "sha256:eb1d80a08e3305ce9eb72219a02aeb9b709023be997595247fada556652a900d",
+        "payee": "vendor-1",
+        "scope": "inference",
+        "settlement_ref": null,
+        "type": "charge_intent",
+        "version": "1"
+      },
+      "n": 200,
+      "offline_verify": true,
+      "reasoning": "seeded mutation of caps/payee/scope/bind/approval",
+      "verdict": "DENY",
+      "violates": [
+        "per_charge_cap",
+        "authority_binding"
+      ]
+    }
+  ],
+  "attacks_requested": 200,
+  "bypasses": [],
+  "calls": 200,
+  "coverage": {
+    "executed": 101,
+    "requested": 200
+  },
+  "deterministic": [
+    {
+      "label": "self-signed mandate install",
+      "pass": true
+    },
+    {
+      "label": "forged-authority intent DENY",
+      "pass": true
+    },
+    {
+      "label": "replay DENY",
+      "pass": true
+    },
+    {
+      "label": "forged countersign DENY",
+      "pass": true
+    },
+    {
+      "label": "ledger rewrite detected",
+      "pass": true
+    },
+    {
+      "label": "foreign payee DENY",
+      "pass": true
+    }
+  ],
+  "errored": 0,
+  "executed": 101,
+  "failures": [],
+  "honest": {
+    "allow": true,
+    "offline_recompute": true,
+    "settlement": true
+  },
+  "mandate_ref": "sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35",
+  "passed": true,
+  "refused": 0
+}
