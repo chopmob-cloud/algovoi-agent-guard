@@ -12,6 +12,7 @@ REPO = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("C:/algo/algovoi-agent-g
 sys.path.insert(0, str(REPO / "src"))
 from algovoi_agent_guard import guard, intent, keys, mandate, verify
 from algovoi_agent_guard.ledger import Ledger, verify_chain
+from algovoi_agent_guard.redteam import engine
 
 NOW = datetime(2026, 11, 23, 8, 0, 0, tzinfo=timezone.utc)
 AGENT = "sha256:" + "b3" * 32
@@ -94,7 +95,7 @@ results["decide_allow_commit_n200"] = timeit(decide_once, 200, warmup=10)
 
 # 4. single-append latency vs ledger size (full-history rewrite cost)
 append_scaling = {}
-for size in (0, 100, 300):
+for size in (0, 100, 300, 500):
     p = OUT / f"app{size}.jsonl"
     if p.exists():
         p.unlink()
@@ -116,7 +117,7 @@ results["append_latency_by_ledger_size"] = append_scaling
 
 # 5. verify_chain latency vs ledger size
 chain_scaling = {}
-for size in (100, 300, 500):
+for size in (100, 300, 500, 1000):
     p = OUT / f"chain{size}.jsonl"
     if p.exists():
         p.unlink()
@@ -128,6 +129,56 @@ for size in (100, 300, 500):
     entries = lg.entries
     chain_scaling[size] = timeit(lambda: verify_chain(entries), 15, warmup=2)
 results["verify_chain_by_ledger_size"] = chain_scaling
+
+# 6. tamper-detection latency vs ledger size (security: catch one mutated entry)
+import copy
+tamper_scaling = {}
+for size in (100, 500, 1000):
+    p = OUT / f"tam{size}.jsonl"
+    if p.exists():
+        p.unlink()
+    lg = Ledger(p)
+    g = guard.Guard(ENV, lg, AGENT, now_fn=lambda: NOW)
+    for k in range(size):
+        lg.append(charge_id=f"t{k}", amount=10, asset="USDC", payee="vendor-1",
+                  period="monthly", guardrail_ref=g._gref("ALLOW"), ts=TS)
+    bad = copy.deepcopy(lg.entries)
+    bad[size // 2]["amount"] += 1
+    det = timeit(lambda: verify_chain(bad), 15, warmup=2)
+    ok, _ = verify_chain(bad)
+    det["detected"] = (not ok)
+    tamper_scaling[size] = det
+results["tamper_detection_by_ledger_size"] = tamper_scaling
+
+# 7. red-team adversary throughput (real engine, deterministic, no network)
+_SHAPES = [
+    {"amount": 100, "payee": "vendor-1"},
+    {"amount": 5000, "payee": "vendor-1"},
+    {"amount": 100, "payee": "attacker"},
+    {"amount": 100, "payee": "vendor-1", "approval": "self-signed", "authority": "forged"},
+    {"amount": -5, "payee": "vendor-1"},
+]
+payloads = OUT / "payloads200.json"
+payloads.write_text(json.dumps([dict(_SHAPES[i % len(_SHAPES)]) for i in range(200)]),
+                    encoding="utf-8")
+
+def redteam_run(kind, n, outdir):
+    od = OUT / outdir
+    if od.exists():
+        import shutil
+        shutil.rmtree(od)
+    t = time.perf_counter()
+    if kind == "fuzz":
+        engine.run_redteam(str(od), attacks=n, adversary="fuzz", seed=7)
+    else:
+        engine.run_redteam(str(od), attacks=n, adversary="file",
+                           attacks_file=str(payloads), seed=7)
+    dt = time.perf_counter() - t
+    return {"adversary": kind, "attacks": n, "seconds": round(dt, 3),
+            "attacks_per_sec": round(n / dt, 1)}
+
+results["redteam_throughput"] = [redteam_run("fuzz", 200, "rt-fuzz"),
+                                 redteam_run("file", 200, "rt-file")]
 
 (OUT / "bench.json").write_text(json.dumps(results, indent=2), encoding="utf-8")
 print(json.dumps(results, indent=2))

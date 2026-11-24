@@ -143,10 +143,10 @@ to the published conformance vectors (28 vector tests), so it composes with
 ## Tests
 
 ```bash
-PYTHONPATH=src python -m pytest -q     # 166 tests
+PYTHONPATH=src python -m pytest -q     # 256 tests
 ```
 
-166 tests: 28 frozen-vector conformance, guard enforcement, red-team + countersign
+256 tests: 28 frozen-vector conformance, guard enforcement, red-team + countersign
 negative controls, per-adversary lane tests (model/human/file/fuzz), and a
 fault-tolerance / error-correction suite. Verified green on the workstation
 (py3.12, cryptography 48); the vm2 cleanroom gate is re-run on every shipped tree.
@@ -173,11 +173,14 @@ Each property has an isolating test; disabling its check fails exactly that test
 
 ## Benchmarks
 
-Real `perf_counter` runs on two hosts (see [`BENCHMARKS.md`](BENCHMARKS.md)):
-`evaluate()` ~1,200–1,500/s and offline `verify_decision()` ~790–1,085/s (sub-millisecond
-median). The durable commit is `fsync`-bound and O(n) in ledger size — ~3 ms (linux) to
-10 ms (win32) for an empty append, rising to ~26–38 ms at 300 entries. Auditability is
-favoured over throughput; the scaling is reported, not hidden.
+Real `perf_counter` runs, regenerated from each run's `bench.json`
+([`BENCHMARKS.md`](BENCHMARKS.md), `tools/bench.py` + `tools/gen_benchmarks.py`):
+`evaluate()` ~1,400/s and offline `verify_decision()` ~890/s (sub-millisecond median).
+The durable commit is `fsync`-bound and O(n) in ledger size — ~10 ms for an empty append,
+~46 ms at 500 entries. Hash-chain verify and tamper detection scale linearly and every
+injected mid-chain mutation is detected. The red-team engine sustains ~450–490 attacks/s
+offline (fuzz and authored-file adversaries, 200 attacks each). Auditability is favoured
+over throughput; the scaling is reported, not hidden.
 
 ## License
 
