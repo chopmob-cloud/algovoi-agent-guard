@@ -44,40 +44,62 @@ def _read_key(path):
         return fh.read().strip()
 
 
+def output_from_argv(argv):
+    """Return the output mode asked for on the command line, even if parsing failed.
+
+    argparse raises SystemExit before the output flag is known, so a caller that asked
+    for JSON still gets text. Parse again with the same flag definition but tolerating
+    unknown arguments: that accepts -ojson and --output=json, and stops at '--', so a
+    positional "-o json" is left alone.
+    """
+    # allow_abbrev=False matters: --out is a prefix of --output, and with abbreviation on
+    # argparse reads the value of the unknown --out as the value of --output.
+    probe = argparse.ArgumentParser(add_help=False, allow_abbrev=False)
+    probe.add_argument("-o", "--output", choices=("text", "json"), default="text")
+    try:
+        known, _ = probe.parse_known_args(list(argv))
+    except SystemExit:
+        return "text"
+    return known.output
+
+
 def main(argv=None) -> int:
     from .redteam.engine import AI_DISCLAIMER
     p = argparse.ArgumentParser(prog="algovoi-agent-guard", description=__doc__)
+    out_parent = argparse.ArgumentParser(add_help=False)
+    out_parent.add_argument("-o", "--output", choices=("text", "json"),
+                            default="text")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    q = sub.add_parser("keygen"); q.add_argument("--out", required=True)
-    q = sub.add_parser("issue")
+    q = sub.add_parser("keygen", parents=[out_parent]); q.add_argument("--out", required=True)
+    q = sub.add_parser("issue", parents=[out_parent])
     for a in ("--key", "--payer", "--cap", "--out"):
         q.add_argument(a, required=True)
     q.add_argument("--period", default="monthly"); q.add_argument("--payee", default="*")
     q.add_argument("--scope", nargs="*", default=[]); q.add_argument("--max-per-charge")
     q.add_argument("--ttl", type=int, default=31_536_000)
-    q = sub.add_parser("intent")
+    q = sub.add_parser("intent", parents=[out_parent])
     for a in ("--mandate", "--charge-id", "--payee", "--amount", "--out"):
         q.add_argument(a, required=True)
     q.add_argument("--asset", default="USDC"); q.add_argument("--scope")
-    q = sub.add_parser("approve")
+    q = sub.add_parser("approve", parents=[out_parent])
     for a in ("--key", "--mandate", "--intent", "--agent-ref", "--expires", "--out"):
         q.add_argument(a, required=True)
-    q = sub.add_parser("decide")
+    q = sub.add_parser("decide", parents=[out_parent])
     for a in ("--mandate", "--ledger", "--agent-ref", "--intent", "--out"):
         q.add_argument(a, required=True)
     q.add_argument("--approval")
-    q = sub.add_parser("bind")
+    q = sub.add_parser("bind", parents=[out_parent])
     for a in ("--receipt", "--settlement-ref", "--out"):
         q.add_argument(a, required=True)
-    q = sub.add_parser("verify")
+    q = sub.add_parser("verify", parents=[out_parent])
     for a in ("--mandate", "--receipt"):
         q.add_argument(a, required=True)
     q.add_argument("--ledger"); q.add_argument("--settlement")
-    q = sub.add_parser("revoke")
+    q = sub.add_parser("revoke", parents=[out_parent])
     for a in ("--key", "--mandate", "--out"):
         q.add_argument(a, required=True)
-    q = sub.add_parser("demo"); q.add_argument("--outdir", required=True)
+    q = sub.add_parser("demo", parents=[out_parent]); q.add_argument("--outdir", required=True)
     q = sub.add_parser("redteam", epilog=("AI DISCLAIMER: " + AI_DISCLAIMER
                                          + " See DISCLAIMER.md."),
                        formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -89,7 +111,15 @@ def main(argv=None) -> int:
     q.add_argument("--api-key-env"); q.add_argument("--attacks-file")
     q.add_argument("--seed", type=int, default=0)
 
-    a = p.parse_args(argv)
+    try:
+        a = p.parse_args(argv)
+    except SystemExit as exc:
+        if exc.code in (0, None):
+            raise
+        raw = sys.argv[1:] if argv is None else argv
+        if output_from_argv(raw) == "json":
+            print(json.dumps({"error": "invalid arguments", "exit_code": 2}))
+        return 2
     try:
         if a.cmd == "keygen":
             import os
