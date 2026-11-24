@@ -133,12 +133,19 @@ this guard only**, moves no funds, and signs with no real key. The security clai
 rests on the deterministic guard and an independent predicate, never on the model's
 verdict. Full terms: [`DISCLAIMER.md`](DISCLAIMER.md). No warranty; Apache-2.0.
 
-## Standalone, and a natural fit into AlgoVoi Fabric
+## Standalone, and wired into the AlgoVoi estate
 
 Zero AlgoVoi runtime dependencies (`cryptography>=42` only). Emits the keystone
 `mandate` step (`order 2`, `canon_version: jcs-rfc8785-v1`) and refs byte-identical
 to the published conformance vectors (28 vector tests), so it composes with
-`algovoi-fabric` by construction.
+[`algovoi-fabric`](https://github.com/chopmob-cloud/algovoi-fabric) by construction.
+
+It also bolts into [`algovoi-secure-hub`](https://github.com/chopmob-cloud/algovoi-secure-hub)
+as a spend-authority service: a thin wrapper exposes `/health` reflecting a live
+enforcement self-check (honest charge ALLOW, replay DENY, countersign-forgery DENY)
+and registers through the hub's service bridge. Exercised live on VM2 (2026-11-24):
+registered and reported `up:true` in `/v1/posture`. Template and worked example:
+[`examples/agent_guard_addon.py`](https://github.com/chopmob-cloud/algovoi-secure-hub/blob/main/examples/agent_guard_addon.py).
 
 ## Tests
 
