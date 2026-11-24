@@ -182,12 +182,16 @@ Each property has an isolating test; disabling its check fails exactly that test
 
 Real `perf_counter` runs, regenerated from each run's `bench.json`
 ([`BENCHMARKS.md`](BENCHMARKS.md), `tools/bench.py` + `tools/gen_benchmarks.py`):
-`evaluate()` ~1,400/s and offline `verify_decision()` ~890/s (sub-millisecond median).
-The durable commit is `fsync`-bound and O(n) in ledger size — ~10 ms for an empty append,
-~46 ms at 500 entries. Hash-chain verify and tamper detection scale linearly and every
-injected mid-chain mutation is detected. The red-team engine sustains ~450–490 attacks/s
+`evaluate()` ~1,550/s and offline `verify_decision()` ~1,080/s (sub-millisecond median).
+The durable commit is `fsync`-bound and O(n) in ledger size — ~2 ms for an empty append,
+~42 ms at 500 entries. Hash-chain verify and tamper detection scale linearly and every
+injected mid-chain mutation is detected. The red-team engine sustains ~600–710 attacks/s
 offline (fuzz and authored-file adversaries, 200 attacks each). Auditability is favoured
 over throughput; the scaling is reported, not hidden.
+
+A captured 2026-11-24 VM2 run — performance, the rogue-agent demo, and a seeded fuzz
+red-team (0 bypasses) — is kept with its raw logs and screenshots in
+[`docs/evidence/EVIDENCE.md`](docs/evidence/EVIDENCE.md).
 
 ## License
 

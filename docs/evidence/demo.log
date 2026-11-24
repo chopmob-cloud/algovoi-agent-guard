@@ -1,0 +1,33 @@
+algovoi-agent-guard — rogue-agent attack replay
+mandate_ref sha256:a4f8cb5ee09b29478ac1cc2f468d66e16d3d25f7a229a31d22ad521e11d04d35
+human kid   ea5a305022e57eab (private key held outside the agent workspace)
+
+ATTACK 1 — agent forges a richer mandate under its own key and tries to install it
+  set_envelope refused: envelope swap refused: different human key or payer
+  [PASS] self-signed mandate cannot be installed
+  [PASS] intent bound to the forged authority is DENY
+  reasons: ['mandate: intent bound to a different authority', "countersign: key: countersign not under the mandate's human key", "countersign: key: kid does not match the mandate's human key"]
+
+HONEST PATH — human countersigns a 100-unit charge to vendor-1
+  [PASS] honest charge ALLOW
+  guardrail_ref sha256:938aaeadcb650707dc29eb303cdda2fac518f3871f7451267c7bd581c07bfd48
+
+ATTACK 2 — agent replays the settled charge_id
+  [PASS] replay DENY
+
+ATTACK 3 — agent forges the countersign with its own key
+  [PASS] forged countersign DENY
+
+ATTACK 4 — agent rewrites the ledger to hide its spend
+  [PASS] tampered chain fails offline verification
+  [PASS] ALLOW receipt no longer verifies against tampered ledger
+  reasons: ['ledger: chain: entry 0 entry_ref does not recompute']
+
+ATTACK 5 — agent pays a foreign payee under a valid countersign
+  [PASS] foreign payee DENY
+
+SETTLEMENT — bind the honest ALLOW to the rail's transaction reference
+  [PASS] ALLOW receipt recomputes offline from public material
+  [PASS] settlement binding verifies offline
+
+DEMO PASSED — every attack denied or detected; honest path recomputes offline.
