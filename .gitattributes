@@ -1,0 +1,8 @@
+# Keep the GitHub Trending language category on Python: docs, examples and
+# media are documentation, not source; built output is vendored.
+docs/** linguist-documentation
+examples/** linguist-documentation
+*.md linguist-documentation
+*.gif linguist-documentation
+*.png linguist-documentation
+dist/** linguist-vendored

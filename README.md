@@ -10,6 +10,8 @@ a receipt anyone can recompute offline from public material — no mediator sign
 required. Then an adversary — a live AI model, a human red-teamer, an authored
 attack file, or a seeded fuzzer — tries to break it, and you watch every attack fail.
 
+⭐ **If this is useful, a star helps others find it.**
+
 ```
 pip install -e .                              # only dependency: cryptography>=42
 algovoi-agent-guard demo --outdir ./demo
