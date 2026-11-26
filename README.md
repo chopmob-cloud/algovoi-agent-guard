@@ -12,6 +12,17 @@ attack file, or a seeded fuzzer — tries to break it, and you watch every attac
 
 ⭐ **If this is useful, a star helps others find it.**
 
+## Documentation
+
+Full documentation: **[docs.algovoi.co.uk](https://docs.algovoi.co.uk)** — the
+AlgoVoi documentation site.
+
+| | |
+|---|---|
+| This product | [docs.algovoi.co.uk/agent-guard](https://docs.algovoi.co.uk/agent-guard) |
+| How the layers fit | [docs.algovoi.co.uk/application-matrix](https://docs.algovoi.co.uk/application-matrix) |
+| Free licence & self-host | [docs.algovoi.co.uk/free-licence](https://docs.algovoi.co.uk/free-licence) |
+
 ```
 pip install -e .                              # only dependency: cryptography>=42
 algovoi-agent-guard demo --outdir ./demo
